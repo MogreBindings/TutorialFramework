@@ -25,12 +25,33 @@ namespace Mogre.TutorialFramework
 
         public void Go()
         {
-            if (!Setup())
-                return;
+            try
+            {
+                if (!Setup())
+                    return;
 
-            mRoot.StartRendering();
+                mRoot.StartRendering();
 
-            DestroyScene();
+                DestroyScene();
+            }
+            catch (System.Runtime.InteropServices.SEHException e)
+            {
+                Console.WriteLine(e);
+
+                System.Windows.Forms.MessageBox.Show(
+                    "An Ogre error has occurred. Check the Ogre.log file for details", "Exception",
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                System.Windows.Forms.MessageBox.Show(
+                    e.Message, "Error",
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
 
         protected virtual bool Setup()
