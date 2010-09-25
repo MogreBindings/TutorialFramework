@@ -15,6 +15,7 @@ namespace Mogre.TutorialFramework
         private bool   mGoingUp;
         private bool   mGoingDown;
         private bool   mFastMove;
+        private bool   mFreeze;
 
 
 
@@ -65,8 +66,17 @@ namespace Mogre.TutorialFramework
             get { return mFastMove; }
         }
 
+        public bool Freeze
+        {
+            set { mFreeze = value; }
+            get { return mFreeze; }
+        }
+
         public void UpdateCamera(float timeFragment)
         {
+            if (mFreeze)
+                return;
+
             // build our acceleration vector based on keyboard input composite
             var move = Vector3.ZERO;
             if (mGoingForward) move += mCamera.Direction;
@@ -87,6 +97,9 @@ namespace Mogre.TutorialFramework
 
         public void MouseMovement(int x, int y)
         {
+            if (mFreeze)
+                return;
+
             mCamera.Yaw(new Degree(-x * 0.15f));
             mCamera.Pitch(new Degree(-y * 0.15f));
         }

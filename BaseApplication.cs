@@ -72,7 +72,7 @@ namespace Mogre.TutorialFramework
 
             CreateScene();
 
-            CreateFrameListener();
+            CreateFrameListeners();
             InitializeInput();
 
             mDebugOverlay = new DebugOverlay(mWindow);
@@ -203,7 +203,7 @@ namespace Mogre.TutorialFramework
             mWindow.WriteContentsToTimestampedFile("screenshot", ".png");
         }
 
-        protected virtual void CreateFrameListener()
+        protected virtual void CreateFrameListeners()
         {
             mRoot.FrameRenderingQueued += new FrameListener.FrameRenderingQueuedHandler(OnFrameRenderingQueued);
         }

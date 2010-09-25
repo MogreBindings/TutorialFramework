@@ -10,19 +10,16 @@ namespace Mogre.TutorialFramework
         protected Keyboard mKeyboard;
         protected Mouse    mMouse;
 
-        protected void InitializeInput()
+        protected virtual void InitializeInput()
         {
             LogManager.Singleton.LogMessage("*** Initializing OIS ***");
 
-            var inputParams = new MOIS.ParamList();
-            IntPtr windowHnd;
+            int windowHnd;
             mWindow.GetCustomAttribute("WINDOW", out windowHnd);
-            inputParams.Insert("WINDOW", windowHnd.ToString());
+            var inputMgr = MOIS.InputManager.CreateInputSystem((uint)windowHnd);
 
-            var inputManager = MOIS.InputManager.CreateInputSystem(inputParams);
-
-            mKeyboard = (MOIS.Keyboard)inputManager.CreateInputObject(MOIS.Type.OISKeyboard, true);
-            mMouse    = (MOIS.Mouse)   inputManager.CreateInputObject(MOIS.Type.OISMouse,    true);
+            mKeyboard = (MOIS.Keyboard)inputMgr.CreateInputObject(MOIS.Type.OISKeyboard, true);
+            mMouse    = (MOIS.Mouse)   inputMgr.CreateInputObject(MOIS.Type.OISMouse,    true);
 
             mKeyboard.KeyPressed  += new KeyListener.KeyPressedHandler(     OnKeyPressed);
             mKeyboard.KeyReleased += new KeyListener.KeyReleasedHandler(    OnKeyReleased);
